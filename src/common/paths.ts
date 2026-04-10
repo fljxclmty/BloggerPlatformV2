@@ -1,0 +1,9 @@
+export const BLOG_PATHS = "/blogs";
+
+export const POST_PATHS = "/posts";
+
+export const TESTING_PATHS = "/testing";
+
+export const AUTH_PATHS = "/auth";
+
+export const USERS_PATHS = "/users";
