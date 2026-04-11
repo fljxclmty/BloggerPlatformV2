@@ -1,6 +1,7 @@
 import { UsersQueryParams } from "../models/users-models";
 import { usersCollection } from "./users-repo";
 import { usersMapper } from "../mappers/users-mapper";
+import { ObjectId } from "mongodb";
 
 export const usersQueryRepository = {
   async getAllUsers(query: UsersQueryParams) {
@@ -54,6 +55,11 @@ export const usersQueryRepository = {
       $or: [{ login: loginOrEmail }, { email: loginOrEmail }],
     });
 
+    return user;
+  },
+
+  async findUserById(id: string) {
+    const user = await usersCollection.findOne({ _id: new ObjectId(id) });
     return user;
   },
 };

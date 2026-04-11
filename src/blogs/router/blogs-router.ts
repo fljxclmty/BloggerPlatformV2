@@ -6,7 +6,7 @@ import { blogInputValidation } from "../validation/blog-input-validation";
 import { inputValidationResultMiddleware } from "../../common/input-validation-result-mw";
 import { idValidation } from "../../common/id-validation";
 import { blogPostInputValidation } from "../validation/blog-post-input-validation";
-import {blogIdValidation} from "../validation/blog-id-validation";
+import { blogIdValidation } from "../validation/blog-id-validation";
 
 export const blogsRouter = Router();
 

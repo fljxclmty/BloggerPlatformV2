@@ -37,3 +37,9 @@ export type UsersQueryParams = {
   searchLoginTerm?: string | null;
   searchEmailTerm?: string | null;
 };
+
+export type MeViewModel = {
+  email: string;
+  login: string;
+  userId: string;
+};
