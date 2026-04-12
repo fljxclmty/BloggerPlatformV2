@@ -56,7 +56,7 @@ export const postsHandler = {
         userLogin,
         data,
       );
-      return res.status(HttpStatus.OK).send(result.data);
+      return res.status(HttpStatus.Created).send(result.data);
     } catch (e) {
       console.error(e);
       res.sendStatus(HttpStatus.InternalServerError);

@@ -2,7 +2,7 @@ import express, { Express, Request, Response } from "express";
 import { HttpStatus } from "./common/statuses";
 import {
   AUTH_PATHS,
-  BLOG_PATHS,
+  BLOG_PATHS, COMMENTS_PATHS,
   POST_PATHS,
   TESTING_PATHS,
   USERS_PATHS,
@@ -12,6 +12,7 @@ import { postsRouter } from "./posts/router/posts-router";
 import { usersRouter } from "./users/router/users-router";
 import { testingRouter } from "./testing/testing-router";
 import { authRouter } from "./auth/router/auth-router";
+import {commentsRouter} from "./comments/router/comments-router";
 
 export const setupApp = (app: Express) => {
   app.use(express.json());
@@ -25,6 +26,7 @@ export const setupApp = (app: Express) => {
   app.use(USERS_PATHS, usersRouter);
   app.use(TESTING_PATHS, testingRouter);
   app.use(AUTH_PATHS, authRouter);
+  app.use(COMMENTS_PATHS, commentsRouter)
 
   return app;
 };
