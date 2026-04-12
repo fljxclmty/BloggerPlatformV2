@@ -1,5 +1,5 @@
-import {ResultStatus} from "./result-code";
-import {HttpStatus} from "../statuses";
+import { ResultStatus } from "./result-code";
+import { HttpStatus } from "../statuses";
 
 export const resultCodeToHttpException = (resultCode: ResultStatus): number => {
   switch (resultCode) {

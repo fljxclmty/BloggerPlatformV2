@@ -7,7 +7,7 @@ export const commentsQueryHandler = {
   async getCommentById(req: Request, res: Response) {
     try {
       const comment: CommentViewModel | null =
-        await commentsQueryRepository.getCommentById(req.params.commentId);
+        await commentsQueryRepository.getCommentById(req.params.id);
       return comment
         ? res.status(HttpStatus.OK).send(comment)
         : res.sendStatus(HttpStatus.NotFound);

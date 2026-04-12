@@ -9,6 +9,7 @@ export const commentsHandler = {
     try {
       const result = await commentsService.updateComment(
         req.params.commentId,
+        req.userId as string,
         req.body,
       );
       if (result.status !== ResultStatus.Success) {

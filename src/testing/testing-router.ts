@@ -9,7 +9,7 @@ testingRouter.delete("/all-data", async (req: Request, res: Response) => {
   try {
     const db = client.db();
 
-    const collectionsToClear = ["blogs", "posts", "users"];
+    const collectionsToClear = ["blogs", "posts", "users", "comments"];
 
     await Promise.all(
       collectionsToClear.map((collectionName) =>
