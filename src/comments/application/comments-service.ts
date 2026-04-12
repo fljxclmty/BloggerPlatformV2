@@ -39,22 +39,30 @@ export const commentsService = {
     return { status: ResultStatus.Success, extensions: [], data: null };
   },
 
-  async deleteComment(commentId: string) {
-    const isDeleted = await commentsRepository.deleteComment(commentId);
+  async deleteComment(commentId: string, userId: string) {
+    const comment = await commentsQueryRepository.getCommentById(commentId);
 
-    if (!isDeleted) {
+    if (!comment) {
       return {
         status: ResultStatus.NotFound,
-        errorMessage: "NotFound",
+        errorMessage: "Comment not found",
         extensions: [
-          {
-            field: "Comment ID",
-            message: "Comment with this ID does not exist",
-          },
+          { field: "id", message: "Comment with this ID does not exist" },
         ],
         data: null,
       };
     }
+
+    if (comment.commentatorInfo.userId !== userId) {
+      return {
+        status: ResultStatus.Forbidden,
+        errorMessage: "You cannot delete a comment that is not yours",
+        extensions: [],
+        data: null,
+      };
+    }
+
+    await commentsRepository.deleteComment(commentId);
 
     return {
       status: ResultStatus.Success,
