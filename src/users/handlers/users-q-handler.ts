@@ -20,8 +20,9 @@ export const usersQueryHandler = {
 
   async getUserInfo(req: Request, res: Response) {
     try {
-      const user: UserDbModel | null =
-        await usersQueryRepository.findUserById(req.userId as string);
+      const user: UserDbModel | null = await usersQueryRepository.findUserById(
+        req.userId as string,
+      );
       if (!user) return res.sendStatus(HttpStatus.NotFound);
       res.status(HttpStatus.OK).send(usersDbToMeViewMapper(user));
     } catch (e) {

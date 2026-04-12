@@ -9,6 +9,7 @@ import { blogsRepository } from "../repository/blogs-repo";
 import { blogsMapper } from "../mappers/blogs-mapper";
 import { PostViewModel } from "../../posts/models/posts-models";
 import { postsMapper } from "../../posts/mappers/posts-mapper";
+import { Result } from "../../common/result/result-type";
 
 export const blogsService = {
   async createBlog(data: BlogInputModel): Promise<BlogViewModel> {

@@ -2,6 +2,12 @@ import { PostsQueryParams } from "../models/posts-models";
 import { postsCollection } from "./posts-repo";
 import { postsMapper } from "../mappers/posts-mapper";
 import { ObjectId } from "mongodb";
+import {
+  CommentsQueryParams,
+  PaginatorCommentViewModel,
+} from "../../comments/models/comments-models";
+import { commentsMapper } from "../../comments/mappers/comments-mapper";
+import { commentsCollection } from "../../comments/repositories/comments-repo";
 
 export const postsQueryRepository = {
   async getAllPosts(query: PostsQueryParams) {
@@ -39,5 +45,35 @@ export const postsQueryRepository = {
     if (!post) return null;
 
     return postsMapper(post);
+  },
+
+  async getAllCommentsForPostById(postId: string, query: CommentsQueryParams) {
+    if (!ObjectId.isValid(postId)) return null;
+
+    const filter = { postId: postId };
+    const sortDirection = query.sortDirection === "asc" ? 1 : -1;
+    const pageSize = query.pageSize ? Number(query.pageSize) : 10;
+    const pageNumber = query.pageNumber ? Number(query.pageNumber) : 1;
+    const sortBy = query.sortBy ? query.sortBy : "createdAt";
+
+    const skip = (pageNumber - 1) * pageSize;
+
+    const totalCount = await commentsCollection.countDocuments(filter);
+    const pagesCount = Math.ceil(totalCount / pageSize);
+
+    const items = await commentsCollection
+      .find(filter)
+      .sort({ [sortBy]: sortDirection })
+      .skip(skip)
+      .limit(pageSize)
+      .toArray();
+
+    return {
+      pagesCount: pagesCount,
+      page: pageNumber,
+      pageSize: pageSize,
+      totalCount: totalCount,
+      items: items.map(commentsMapper),
+    } as PaginatorCommentViewModel;
   },
 };

@@ -33,7 +33,7 @@ export const authMiddleware = async (
     if (!user) return res.sendStatus(HttpStatus.Unauthorized);
 
     req.userId = user._id.toString();
-
+    req.userLogin = user.login;
     next();
   } catch (e) {
     console.error(e);

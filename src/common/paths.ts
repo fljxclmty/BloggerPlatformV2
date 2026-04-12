@@ -7,3 +7,5 @@ export const TESTING_PATHS = "/testing";
 export const AUTH_PATHS = "/auth";
 
 export const USERS_PATHS = "/users";
+
+export const COMMENTS_PATHS = "/comments";
