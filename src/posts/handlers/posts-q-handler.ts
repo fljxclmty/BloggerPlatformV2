@@ -34,14 +34,22 @@ export const postsQueryHandler = {
   async getAllCommentsForPostById(req: Request, res: Response) {
     try {
       const commentsWithPaging: PaginatorCommentViewModel | null =
-        await postsQueryRepository.getAllCommentsForPostById(
-          req.params.postId,
-          req.query,
-        );
-      res.status(HttpStatus.OK).send(commentsWithPaging);
+          await postsQueryRepository.getAllCommentsForPostById(
+              req.params.postId,
+              req.query as any,
+          );
+
+
+      if (!commentsWithPaging) {
+        return res.sendStatus(HttpStatus.NotFound);
+      }
+
+
+      return res.status(HttpStatus.OK).send(commentsWithPaging);
+
     } catch (e) {
       console.error(e);
-      res.sendStatus(HttpStatus.InternalServerError);
+      return res.sendStatus(HttpStatus.InternalServerError);
     }
   },
 };
