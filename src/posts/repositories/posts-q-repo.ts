@@ -47,26 +47,33 @@ export const postsQueryRepository = {
     return postsMapper(post);
   },
 
-  async getAllCommentsForPostById(postId: string, query: CommentsQueryParams) {
+  async getAllCommentsForPostById(postId: string, query: CommentsQueryParams): Promise<PaginatorCommentViewModel | null> {
+
     if (!ObjectId.isValid(postId)) return null;
+
+
+    const post = await postsCollection.findOne({ _id: new ObjectId(postId) });
+    if (!post) return null;
+
 
     const filter = { postId: postId };
     const sortDirection = query.sortDirection === "asc" ? 1 : -1;
-    const pageSize = query.pageSize ? Number(query.pageSize) : 10;
-    const pageNumber = query.pageNumber ? Number(query.pageNumber) : 1;
-    const sortBy = query.sortBy ? query.sortBy : "createdAt";
-
+    const pageSize = Number(query.pageSize) || 10;
+    const pageNumber = Number(query.pageNumber) || 1;
+    const sortBy = query.sortBy || "createdAt";
     const skip = (pageNumber - 1) * pageSize;
+
 
     const totalCount = await commentsCollection.countDocuments(filter);
     const pagesCount = Math.ceil(totalCount / pageSize);
 
     const items = await commentsCollection
-      .find(filter)
-      .sort({ [sortBy]: sortDirection })
-      .skip(skip)
-      .limit(pageSize)
-      .toArray();
+        .find(filter)
+        .sort({ [sortBy]: sortDirection })
+        .skip(skip)
+        .limit(pageSize)
+        .toArray();
+
 
     return {
       pagesCount: pagesCount,
@@ -74,6 +81,6 @@ export const postsQueryRepository = {
       pageSize: pageSize,
       totalCount: totalCount,
       items: items.map(commentsMapper),
-    } as PaginatorCommentViewModel;
-  },
+    };
+  }
 };
