@@ -1,8 +1,10 @@
-import { ResultStatus } from "./result-code";
-import { HttpStatus } from "../statuses";
+import {ResultStatus} from "./result-code";
+import {HttpStatus} from "../statuses";
 
 export const resultCodeToHttpException = (resultCode: ResultStatus): number => {
   switch (resultCode) {
+    case ResultStatus.Success:
+      return HttpStatus.NoContent
     case ResultStatus.BadRequest:
       return HttpStatus.BadRequest;
     case ResultStatus.Forbidden:
