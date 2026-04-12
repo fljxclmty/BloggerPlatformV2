@@ -1,5 +1,5 @@
-import { ResultStatus } from "./result-code";
-import { HttpStatus } from "../statuses";
+import {ResultStatus} from "./result-code";
+import {HttpStatus} from "../statuses";
 
 export const resultCodeToHttpException = (resultCode: ResultStatus): number => {
   switch (resultCode) {
@@ -7,6 +7,8 @@ export const resultCodeToHttpException = (resultCode: ResultStatus): number => {
       return HttpStatus.BadRequest;
     case ResultStatus.Forbidden:
       return HttpStatus.Forbidden;
+    case ResultStatus.Unauthorized:
+      return HttpStatus.Unauthorized;
 
     default:
       return HttpStatus.InternalServerError;
