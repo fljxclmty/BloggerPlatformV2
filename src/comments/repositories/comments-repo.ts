@@ -1,11 +1,6 @@
-import { CommentDbModel, CommentInputModel } from "../models/comments-models";
-import { client } from "../../db/mongo-db";
+import { CommentInputModel } from "../models/comments-models";
 import { ObjectId } from "mongodb";
-import { blogsCollection } from "../../blogs/repository/blogs-repo";
-
-export const commentsCollection = client
-  .db()
-  .collection<CommentDbModel>("comments");
+import { commentsCollection } from "../../db/mongo-db";
 
 export const commentsRepository = {
   async updateComment(commentId: string, data: CommentInputModel) {

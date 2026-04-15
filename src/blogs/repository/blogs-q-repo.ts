@@ -1,17 +1,13 @@
-import {
-  BlogsQueryParams,
-  BlogViewModel,
-  PaginatorBlogViewModel,
-} from "../models/blogs-models";
-import { blogsCollection } from "./blogs-repo";
+import { BlogsQueryParams } from "../models/blogs-models";
+
 import { ObjectId } from "mongodb";
 import { blogsMapper } from "../mappers/blogs-mapper";
 import {
   PaginatorPostViewModel,
   PostsQueryParams,
 } from "../../posts/models/posts-models";
-import { postsCollection } from "../../posts/repositories/posts-repo";
 import { postsMapper } from "../../posts/mappers/posts-mapper";
+import { blogsCollection, postsCollection } from "../../db/mongo-db";
 
 export const blogsQueryRepository = {
   // Получение всех блогов с маппингом

@@ -1,13 +1,7 @@
-import { client } from "../../db/mongo-db";
 import { PostDbModel, PostInputModel } from "../models/posts-models";
 import { ObjectId } from "mongodb";
-import {
-  CommentDbModel,
-  CommentInputModel,
-} from "../../comments/models/comments-models";
-import { commentsCollection } from "../../comments/repositories/comments-repo";
-
-export const postsCollection = client.db().collection<PostDbModel>("posts");
+import { CommentDbModel } from "../../comments/models/comments-models";
+import { commentsCollection, postsCollection } from "../../db/mongo-db";
 
 export const postsRepository = {
   async createPost(newPost: PostDbModel) {

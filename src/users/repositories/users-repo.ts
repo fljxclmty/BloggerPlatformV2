@@ -1,8 +1,6 @@
-import { client } from "../../db/mongo-db";
 import { UserDbModel } from "../models/users-models";
 import { ObjectId } from "mongodb";
-
-export const usersCollection = client.db().collection<UserDbModel>("users");
+import { usersCollection } from "../../db/mongo-db";
 
 export const usersRepository = {
   async createUser(newUser: UserDbModel) {

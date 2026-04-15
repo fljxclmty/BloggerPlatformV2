@@ -3,6 +3,9 @@ import { ObjectId } from "mongodb";
 import { usersRepository } from "../repositories/users-repo";
 import { usersMapper } from "../mappers/users-mapper";
 import { usersQueryRepository } from "../repositories/users-q-repo";
+import { add } from "date-fns";
+import { bcryptService } from "../../common/services/bcrypt-service";
+import { randomUUID } from "crypto";
 
 export const usersService = {
   async createUser(data: UserInputModel) {
@@ -24,12 +27,19 @@ export const usersService = {
       };
     }
 
+    const passwordHash = await bcryptService.hashPassword(data.password);
+
     const newUser: UserDbModel = {
       _id: new ObjectId(),
       login: data.login,
       email: data.email,
-      password: data.password,
+      passwordHash: passwordHash,
       createdAt: new Date().toISOString(),
+      emailConfirmation: {
+        confirmationCode: "admin-created",
+        expirationDate: new Date(),
+        isConfirmed: true,
+      },
     };
 
     const createdUser = await usersRepository.createUser(newUser);

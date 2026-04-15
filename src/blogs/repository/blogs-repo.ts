@@ -1,10 +1,7 @@
-import { client } from "../../db/mongo-db";
+import { blogsCollection, postsCollection } from "../../db/mongo-db";
 import { BlogDbModel, BlogInputModel } from "../models/blogs-models";
 import { ObjectId } from "mongodb";
 import { PostDbModel } from "../../posts/models/posts-models";
-import { postsCollection } from "../../posts/repositories/posts-repo";
-
-export const blogsCollection = client.db().collection<BlogDbModel>("blogs");
 
 export const blogsRepository = {
   async createBlog(newBlog: BlogDbModel): Promise<BlogDbModel> {

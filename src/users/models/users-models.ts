@@ -1,4 +1,6 @@
 import { ObjectId } from "mongodb";
+import { v4 as uuidv4 } from "uuid";
+import { add } from "date-fns";
 
 export type UserInputModel = {
   login: string;
@@ -17,8 +19,13 @@ export type UserDbModel = {
   _id: ObjectId;
   login: string;
   email: string;
-  password: string;
+  passwordHash: string;
   createdAt: string;
+  emailConfirmation: {
+    confirmationCode: string;
+    expirationDate: Date;
+    isConfirmed: boolean;
+  };
 };
 
 export type PaginatorUserViewModel = {

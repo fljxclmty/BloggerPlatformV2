@@ -1,6 +1,6 @@
 import { ObjectId } from "mongodb";
 import { commentsMapper } from "../mappers/comments-mapper";
-import { commentsCollection } from "./comments-repo";
+import { commentsCollection } from "../../db/mongo-db";
 
 export const commentsQueryRepository = {
   async getCommentById(commentId: string) {

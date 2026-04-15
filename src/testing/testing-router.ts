@@ -1,14 +1,12 @@
 import { Router } from "express";
 import { Request, Response } from "express";
-import { client } from "../db/mongo-db";
+import { db } from "../db/mongo-db";
 import { HttpStatus } from "../common/statuses";
 
 export const testingRouter = Router();
 
 testingRouter.delete("/all-data", async (req: Request, res: Response) => {
   try {
-    const db = client.db();
-
     const collectionsToClear = ["blogs", "posts", "users", "comments"];
 
     await Promise.all(

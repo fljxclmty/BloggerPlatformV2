@@ -5,9 +5,7 @@ import {
 } from "../models/posts-models";
 import { postsQueryRepository } from "../repositories/posts-q-repo";
 import { ObjectId } from "mongodb";
-import { blogsCollection } from "../../blogs/repository/blogs-repo";
-import { BlogDbModel } from "../../blogs/models/blogs-models";
-import { postsCollection, postsRepository } from "../repositories/posts-repo";
+
 import { postsMapper } from "../mappers/posts-mapper";
 import {
   CommentatorInfo,
@@ -16,6 +14,8 @@ import {
 } from "../../comments/models/comments-models";
 import { ResultStatus } from "../../common/result/result-code";
 import { commentsMapper } from "../../comments/mappers/comments-mapper";
+import { blogsCollection, postsCollection } from "../../db/mongo-db";
+import { postsRepository } from "../repositories/posts-repo";
 
 export const postsService = {
   async createPost(data: PostInputModel) {
