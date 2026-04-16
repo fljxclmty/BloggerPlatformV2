@@ -9,6 +9,7 @@ import {
   RegistrationConfirmationCodeModel,
   RegistrationEmailResending,
 } from "../models/auth-models";
+import {resultMapper} from "../../common/result/result-mapper";
 
 export const authHandler = {
   async loginUser(req: Request, res: Response) {
@@ -46,7 +47,7 @@ export const authHandler = {
       if (result.status !== ResultStatus.Success) {
         return res
           .status(resultCodeToHttpException(result.status))
-          .send(result.extensions);
+          .send(resultMapper(result));
       }
 
       return res.sendStatus(HttpStatus.NoContent);
@@ -66,7 +67,7 @@ export const authHandler = {
       if (result.status !== ResultStatus.Success) {
         return res
           .status(resultCodeToHttpException(result.status))
-          .send(result.extensions);
+          .send(resultMapper(result));
       }
 
       return res.sendStatus(HttpStatus.NoContent);
@@ -86,7 +87,7 @@ export const authHandler = {
       if (result.status !== ResultStatus.Success) {
         return res
           .status(resultCodeToHttpException(result.status))
-          .send(result.extensions);
+          .send(resultMapper(result));
       }
 
       return res.sendStatus(HttpStatus.NoContent);

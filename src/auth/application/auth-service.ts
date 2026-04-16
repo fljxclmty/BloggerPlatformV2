@@ -63,8 +63,8 @@ export const authService = {
         errorMessage: "User already exists",
         extensions: [
           {
-            field: "Login, email",
-            message: "User with this login or email already exists",
+            field: "email",
+            message: "User with this email already exists",
           },
         ],
         data: null,
