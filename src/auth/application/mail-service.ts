@@ -32,10 +32,7 @@ transporter.verify((error, success) => {
   }
 });
 
-export const sendRegistrationMail = async (
-  email: string,
-  activationLink: string,
-) => {
+export const sendRegistrationMail = async (email: string, code: string) => {
   try {
     await transporter.sendMail({
       from: process.env.SMTP_USER,
@@ -43,7 +40,7 @@ export const sendRegistrationMail = async (
       subject: "Активация аккаунта на Blogger Platform",
       html: `<h1>Thank for your registration</h1>
  <p>To finish registration please follow the link below:
-     <a href='${activationLink}'>complete registration</a>
+     <a href='https://somesite.com/confirm-email?code=${code}'>complete registration</a>
  </p>`,
     });
   } catch (e) {
