@@ -57,16 +57,23 @@ export const authService = {
       email,
     );
 
-    if (user) {
+    const extensions = [];
+
+    // Раздельная проверка для точных сообщений об ошибках
+    const userByLogin = await usersQueryRepository.findByLogin(login);
+    if (userByLogin) {
+      extensions.push({ field: "login", message: "login should be unique" });
+    }
+
+    const userByEmail = await usersQueryRepository.findByEmail(email);
+    if (userByEmail) {
+      extensions.push({ field: "email", message: "email should be unique" });
+    }
+
+    if (extensions.length > 0) {
       return {
         status: ResultStatus.BadRequest,
-        errorMessage: "User already exists",
-        extensions: [
-          {
-            field: "email",
-            message: "User with this email already exists",
-          },
-        ],
+        extensions: extensions,
         data: null,
       };
     }
@@ -92,13 +99,11 @@ export const authService = {
 
     await usersRepository.createUser(newUser);
 
-
-
-    try {
-      await sendRegistrationMail(newUser.email, confirmationCode);
-    } catch (e) {
-      console.error("Mail sending error", e);
-    }
+    //ФОНОВАЯ отправка письма (без await перед вызовом)
+    // Мы не ждем завершения, чтобы не блокировать ответ клиенту
+    sendRegistrationMail(newUser.email, confirmationCode).catch((e) => {
+      console.error("Background mail sending error:", e);
+    });
 
     return {
       status: ResultStatus.Success,

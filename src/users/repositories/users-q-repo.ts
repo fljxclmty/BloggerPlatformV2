@@ -1,4 +1,4 @@
-import { UsersQueryParams } from "../models/users-models";
+import { UserDbModel, UsersQueryParams } from "../models/users-models";
 import { usersMapper } from "../mappers/users-mapper";
 import { ObjectId } from "mongodb";
 import { usersCollection } from "../../db/mongo-db";
@@ -56,6 +56,14 @@ export const usersQueryRepository = {
     });
 
     return user;
+  },
+
+  async findByLogin(login: string): Promise<UserDbModel | null> {
+    return await usersCollection.findOne({ login: login });
+  },
+
+  async findByEmail(email: string): Promise<UserDbModel | null> {
+    return await usersCollection.findOne({ email: email });
   },
 
   async doesUserExistsByLoginAndEmail(login: string, email: string) {
