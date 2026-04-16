@@ -3,10 +3,9 @@ import { BlogDbModel } from "../blogs/models/blogs-models";
 import { PostDbModel } from "../posts/models/posts-models";
 import { UserDbModel } from "../users/models/users-models";
 import { CommentDbModel } from "../comments/models/comments-models";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
-
-dotenv.config()
+dotenv.config();
 
 // 1. Получаем URL из окружения или используем локальный
 console.log("Current MONGO_URL:", process.env.MONGO_URL);

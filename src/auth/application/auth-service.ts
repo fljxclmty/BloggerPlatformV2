@@ -52,7 +52,6 @@ export const authService = {
   },
 
   async registerUser(login: string, pass: string, email: string) {
-
     const extensions = [];
 
     // Раздельная проверка для точных сообщений об ошибках
@@ -113,7 +112,7 @@ export const authService = {
     const user = await usersCollection.findOne({
       "emailConfirmation.confirmationCode": code,
     });
-      console.log("Status before check:", user?.emailConfirmation.isConfirmed);
+    console.log("Status before check:", user?.emailConfirmation.isConfirmed);
 
     // 2. Если пользователь не найден — код неверный
     if (!user) {
@@ -174,20 +173,12 @@ export const authService = {
   },
 
   async emailConfirmationResending(email: string) {
-    const user = await usersCollection.findOne({
-      email: email,
-    });
+    const user = await usersCollection.findOne({ email: email });
 
     if (!user) {
       return {
         status: ResultStatus.BadRequest,
-        errorMessage: "User does not exist",
-        extensions: [
-          {
-            field: "email",
-            message: "User does not exist",
-          },
-        ],
+        extensions: [{ field: "email", message: "User does not exist" }],
         data: null,
       };
     }
@@ -195,21 +186,32 @@ export const authService = {
     if (user.emailConfirmation.isConfirmed) {
       return {
         status: ResultStatus.BadRequest,
-        errorMessage: "Already confirmed",
-        extensions: [
-          {
-            field: "email",
-            message: "Already confirmed",
-          },
-        ],
+        extensions: [{ field: "email", message: "Already confirmed" }],
         data: null,
       };
     }
 
+    // 1. Генерируем новый код
+    const newConfirmationCode = randomUUID();
+
+    // 2. Обновляем ТОЛЬКО код и дату истечения (isConfirmed не трогаем!)
     const result = await usersCollection.updateOne(
       { _id: user._id },
-      { $set: { "emailConfirmation.isConfirmed": true } },
+      {
+        $set: {
+          "emailConfirmation.confirmationCode": newConfirmationCode,
+          "emailConfirmation.expirationDate": add(new Date(), {
+            hours: 1,
+            minutes: 30,
+          }),
+        },
+      },
     );
+
+    // 3. Отправляем новое письмо с НОВЫМ кодом
+    sendRegistrationMail(user.email, newConfirmationCode).catch((e) => {
+      console.error("Resending mail error:", e);
+    });
 
     return {
       status: ResultStatus.Success,
