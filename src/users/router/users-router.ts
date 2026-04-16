@@ -20,7 +20,7 @@ usersRouter.post(
   superAdminGuardMiddleware,
   userInputValidation,
   inputValidationResultMiddleware,
-  usersHandler.createUser,
+  usersHandler.createUserByAdmin,
 );
 
 usersRouter.delete(

@@ -3,9 +3,9 @@ import { HttpStatus } from "../../common/statuses";
 import { usersService } from "../application/users-service";
 
 export const usersHandler = {
-  async createUser(req: Request, res: Response) {
+  async createUserByAdmin(req: Request, res: Response) {
     try {
-      const result = await usersService.createUser(req.body);
+      const result = await usersService.createUserByAdmin(req.body);
 
       // Проверяем наличие объекта error внутри результата
       if (result.error) {

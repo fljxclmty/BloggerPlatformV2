@@ -52,10 +52,6 @@ export const authService = {
   },
 
   async registerUser(login: string, pass: string, email: string) {
-    const user = await usersQueryRepository.doesUserExistsByLoginAndEmail(
-      login,
-      email,
-    );
 
     const extensions = [];
 
@@ -117,6 +113,7 @@ export const authService = {
     const user = await usersCollection.findOne({
       "emailConfirmation.confirmationCode": code,
     });
+      console.log("Status before check:", user?.emailConfirmation.isConfirmed);
 
     // 2. Если пользователь не найден — код неверный
     if (!user) {

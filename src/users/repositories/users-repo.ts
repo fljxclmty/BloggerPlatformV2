@@ -4,7 +4,13 @@ import { usersCollection } from "../../db/mongo-db";
 
 export const usersRepository = {
   async createUser(newUser: UserDbModel) {
-    await usersCollection.insertOne(newUser);
+    console.log("--- DATABASE INSERT ATTEMPT ---");
+    console.log("Collection name:", usersCollection.collectionName);
+    console.log("Database name:", usersCollection.dbName); // если доступно в вашем драйвере
+
+    const result = await usersCollection.insertOne(newUser);
+
+    console.log("Insert result id:", result.insertedId);
     return newUser;
   },
 

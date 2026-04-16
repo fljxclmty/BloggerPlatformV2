@@ -8,7 +8,7 @@ import { bcryptService } from "../../common/services/bcrypt-service";
 import { randomUUID } from "crypto";
 
 export const usersService = {
-  async createUser(data: UserInputModel) {
+  async createUserByAdmin(data: UserInputModel) {
     const userWithLogin = await usersQueryRepository.findByLoginOrEmail(
       data.login,
     );
