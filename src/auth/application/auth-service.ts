@@ -92,10 +92,10 @@ export const authService = {
 
     await usersRepository.createUser(newUser);
 
-    const activationLink = `https://bloggerplatformv2.onrender.com/confirm-registration?code=${confirmationCode}`;
+
 
     try {
-      await sendRegistrationMail(newUser.email, activationLink);
+      await sendRegistrationMail(newUser.email, confirmationCode);
     } catch (e) {
       console.error("Mail sending error", e);
     }
