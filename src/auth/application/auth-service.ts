@@ -125,7 +125,7 @@ export const authService = {
         errorMessage: "User does not exist",
         extensions: [
           {
-            field: "Login, email or password",
+            field: "code",
             message: "User does not exist",
           },
         ],
@@ -140,7 +140,7 @@ export const authService = {
         errorMessage: "Already confirmed",
         extensions: [
           {
-            field: "Confirmation code",
+            field: "code",
             message: "Already confirmed",
           },
         ],
@@ -155,7 +155,7 @@ export const authService = {
         errorMessage: "Confirmation code has expired",
         extensions: [
           {
-            field: "Confirmation code",
+            field: "code",
             message: "Confirmation code has expired",
           },
         ],
@@ -187,7 +187,7 @@ export const authService = {
         errorMessage: "User does not exist",
         extensions: [
           {
-            field: "Login, email or password",
+            field: "email",
             message: "User does not exist",
           },
         ],
@@ -201,7 +201,7 @@ export const authService = {
         errorMessage: "Already confirmed",
         extensions: [
           {
-            field: "Confirmation code",
+            field: "email",
             message: "Already confirmed",
           },
         ],
